@@ -64,10 +64,6 @@ This project is a web application for detecting skin cancer using object detecti
 
 Contributions are welcome! Please fork the repository and submit a pull request for any improvements or bug fixes.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
 ## Acknowledgments
 
 - [Flask](https://flask.palletsprojects.com/) for the web framework.
