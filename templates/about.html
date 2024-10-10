@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
+        <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <title>Sistem Pendeteksi Penyakit Kanker Kulit</title>
+    </head>
+    <body>
+        <nav>
+            <div class="nav-logo">
+                <a href="#"><img src="{{ url_for('static', filename='assets/images/YOLO.png') }}" alt="Logo"></a>
+            </div>
+            <div class="nav-links">
+                <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
+            </div>
+        </nav>
+        
+        <div class="card">
+            <div class="container">
+                <h5>APLIKASI OBJEK DETEKSI</h5>
+                <p1>Kanker kulit adalah pertumbuhan abnormal sel-sel kulit yang biasanya disebabkan oleh paparan sinar ultraviolet (UV) dari matahari. Ada beberapa jenis kanker kulit, termasuk Melanocytic Nevi (nv), Melanoma (mel), Benign Keratosis-like Lesions (bkl), Basal Cell Carcinoma (bcc), Actinic Keratoses (akiec), Vascular Lesions (vasc), dan Dermatofibroma (df). Deteksi dini sangat penting karena sebagian besar kanker kulit dapat diobati dengan efektif jika ditemukan pada tahap awal.
+                    Aplikasi deteksi kanker kulit ini memiliki dua fitur utama untuk membantu pengguna melakukan pemeriksaan secara mandiri. Pertama, fitur deteksi menggunakan media file memungkinkan pengguna mengunggah video atau gambar kulit yang ingin diperiksa. Aplikasi kemudian memproses file tersebut menggunakan algoritma pembelajaran mesin dan visi komputer untuk mendeteksi tanda-tanda kanker kulit. Kedua, aplikasi ini juga dilengkapi dengan fitur live deteksi menggunakan webcam, yang memungkinkan pengguna melakukan pemeriksaan secara real-time. Dengan mengaktifkan webcam, pengguna dapat langsung melihat hasil deteksi pada layar, memberikan kemudahan dan kecepatan dalam mendapatkan informasi mengenai kondisi kulit mereka.
+                    Aplikasi ini mampu mendeteksi tujuh jenis kanker kulit, yaitu Melanocytic Nevi (nv), Melanoma (mel), Benign Keratosis-like Lesions (bkl), Basal Cell Carcinoma (bcc), Actinic Keratoses (akiec), Vascular Lesions (vasc), dan Dermatofibroma (df). Dengan antarmuka yang user-friendly dan aksesibilitas yang tinggi, aplikasi ini diharapkan dapat meningkatkan kesadaran dan deteksi dini kanker kulit, yang sangat penting untuk pengobatan yang efektif dan peningkatan tingkat kelangsungan hidup.</p1>
+                <p2>JENIS JENIS KANKER KULIT</p2>
+                <div class="image-grid">
+                    <figure>
+                        <img src="{{ url_for('static', filename='assets/images/nv/2.jpg') }}" alt="Contoh Gambar AKIEC 2" id="nv">
+                        <figcaption>Melanocytic Nevi (nv)</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="{{ url_for('static', filename='assets/images/mel/2.jpg') }}" alt="Contoh Gambar AKIEC 2" id="mel">
+                        <figcaption>Melanoma (mel)</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="{{ url_for('static', filename='assets/images/bkl/2.jpg') }}" alt="Contoh Gambar AKIEC 2" id="bkl">
+                        <figcaption>Benign Keratosis-like Lesions (bkl)</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="{{ url_for('static', filename='assets/images/bcc/2.jpg') }}" alt="Contoh Gambar AKIEC 2" id="bcc">
+                        <figcaption>Basal Cell Carcinoma (bcc)</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="{{ url_for('static', filename='assets/images/akiec/2.jpg') }}" alt="Contoh Gambar AKIEC" id="akiec">
+                        <figcaption>Actinic Keratoses (akiec)</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="{{ url_for('static', filename='assets/images/vasc/2.jpg') }}" alt="Contoh Gambar AKIEC 2" id="vasc">
+                        <figcaption>Vascular Lesions (vasc)</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="{{ url_for('static', filename='assets/images/df/2.jpg') }}" alt="Contoh Gambar AKIEC 2" id="df">
+                        <figcaption>Dermatofibroma (df)</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('nv').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Melanocytic Nevi',
+                    text: 'Nevus melanositik, atau tahi lalat adalah lesi kulit jinak yang disebabkan oleh proliferasi sel pigmen (melanosit). Sel-sel ini terdapat pada semua jenis dan warna kulit, tetapi pada nevus melanositik kongenital (CMN), terdapat lebih banyak sel-sel ini, yang membuat warna kulit menjadi lebih gelap. Nevus melanositik dapat muncul saat lahir (CMN) atau muncul kemudian (naevus didapat).',
+                    imageUrl: 'static/assets/images/nv/NV.png',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'Custom image',
+                    showCloseButton: true,
+                    showConfirmButton: false
+                });
+            });
+
+            document.getElementById('mel').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Melanoma',
+                    text: 'Melanoma adalah salah satu jenis kanker kulit yang paling serius dan berbahaya. Ia berkembang dari sel pigmen kulit, melanosit, yang berperan dalam menghasilkan melanin, pigmen yang menentukan warna kulit manusia. Melanoma seringkali muncul di area kulit yang sering terpapar sinar matahari, seperti wajah, tangan, punggung, dan kaki. Namun, ia juga dapat timbul di area yang jarang terkena sinar matahari, seperti mata, bagian bawah kuku, vulva, dan selaput lendir di mulut, hidung.',
+                    imageUrl: 'static/assets/images/mel/MEL.png',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'Custom image',
+                    showCloseButton: true,
+                    showConfirmButton: false
+                });
+            });
+
+            document.getElementById('bkl').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Benign Keratosis-like Lesions',
+                    text: 'Benign Keratosis-like Lesions atau Lesi Mirip Keratosis Jinak adalah istilah umum untuk berbagai pertumbuhan kulit jinak yang menyerupai keratosis. Contohnya termasuk keratosis seboroik dan keratosis lichenoid.',
+                    imageUrl: 'static/assets/images/bkl/BKL.png',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'Custom image',
+                    showCloseButton: true,
+                    showConfirmButton: false
+                });
+            });
+
+            document.getElementById('bcc').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Basal Cell Carcinoma',
+                    text: 'Basal Cell Carcinoma atau Karsinoma sel basal adalah salah satu jenis kanker kulit yang berkembang dari sel basal, yaitu sel kecil berbentuk bulat yang terdapat di lapisan bawah epidermis. Sel basal menghasilkan sel-sel kulit baru ketika sel-sel lama mati, biasanya tumbuh lambat dan jarang menyebar. Namun, jika tidak diobati, dapat merusak jaringan di sekitarnya.',
+                    imageUrl: 'static/assets/images/bcc/BCC.png',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'Custom image',
+                    showCloseButton: true,
+                    showConfirmButton: false
+                });
+            });
+            
+            document.getElementById('akiec').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Actinic Keratoses',
+                    text: 'Actinic Keratoses atau Keratosis Aktinik adalah lesi kulit prakanser akibat paparan sinar UV dari matahari, biasanya muncul di wajah dan tangan. Lesi ini kecil, kasar, dan bersisik. Risiko meningkat dengan usia dan pada kulit terang. Pencegahan meliputi penggunaan tabir surya dan pakaian pelindung. Pengobatan AK meliputi cryotherapy, kuretase, krim topikal, dan terapi fotodinamik. Penting untuk deteksi dan penanganan dini karena 5-10% AK bisa menjadi kanker kulit serius.',
+                    imageUrl: 'static/assets/images/akiec/akiec.png',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'Custom image',
+                    showCloseButton: true,
+                    showConfirmButton: false
+                });
+            });
+
+            document.getElementById('vasc').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Vascular Lesions',
+                    text: 'Lesi vaskular, atau kelainan pembuluh darah adalah kelainan yang relatif umum terjadi pada kulit dan jaringan di bawahnya. Lesi vaskular dapat diklasifikasikan menjadi tiga kategori utama: Hemangioma, Malformasi vaskular, Granuloma piogenik.',
+                    imageUrl: 'static/assets/images/vasc/VASC.png',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'Custom image',
+                    showCloseButton: true,
+                    showConfirmButton: false
+                });
+            });
+
+            document.getElementById('df').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Dermatofibroma',
+                    text: 'Dermatofibroma adalah tumor non-kanker yang berbentuk bulat dan kecil yang tumbuh pada kulit. Ini adalah nodul fibrosa jinak yang umum ditemukan pada kulit kaki bagian bawah orang dewasa. Dermatofibroma juga disebut histiocytoma fibrosa kulit.',
+                    imageUrl: 'static/assets/images/df/DF.png',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'Custom image',
+                    showCloseButton: true,
+                    showConfirmButton: false
+                });
+            });
+        </script>
+    </body>
+</html>

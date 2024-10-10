@@ -1,0 +1,172 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
+    <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Object Detection</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-logo">
+          <a href="#"><img src="{{ url_for('static', filename='assets/images/YOLO.png') }}" alt="Logo"></a>
+      </div>
+      <div class="nav-links">
+          <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+          <a class="nav-link" href="{{ url_for('about') }}">About</a>
+      </div>
+    </nav>
+
+      <h2>Object Detection</h2>
+      <p>Sistem Pendeteksi Penyakit Kanker Kulit</p>
+
+    <div class="file-upload">
+      <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+
+        <div class="image-upload-wrap">
+          <input class="file-upload-input" type='file' onchange="readURL(this);" accept="video/*,image/*" name="file" />
+          <div class="drag-text">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            <h3>Select a file or drag here</h3>
+          </div>
+        </div>
+
+        <button id="webcamButton" class="file-upload-btn" type="button">Webcam</button>
+
+        <div class="file-upload-content">
+          <img class="file-upload-image" src="#" alt="your image" style="display: none;" />
+          <video class="file-upload-video" src="#" controls style="display: none;"></video>
+          <div class="image-title-wrap">
+            <button id="unggah" type="submit" class="submit-image">Submit</button>
+            <button type="button" onclick="removeUpload()" class="remove-image">Remove </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="flash-messages">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+    </div>
+
+    <script>
+    document.getElementById('webcamButton').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Webcam Preview',
+            html: `<img id="videoElement" src="{{ url_for('video_feed') }}" style="width: 450px; height: 300px;" alt="Video Feed">
+            <p1 style="margin: 20px 0 0 0; font-weight: Bold; font-size: 22px">Penjelasan Label Deteksi Penyakit</p1>
+            <p1 style="margin: 5px 0 0 0"><b>nv</b>&nbsp;: Melanocytic Nevi |&nbsp;<b>mel</b>&nbsp;: Melanoma</p1>
+            <p1 style="margin: 0 0 0 0"><b>bcc</b>&nbsp;: Basal Cell Carcinoma |&nbsp;<b>akiec</b>&nbsp;: Actinic Keratoses</p1>
+            <p1 style="margin: 0 0 0 0"><b>bkl</b>&nbsp;: Benign Keratosis-like Lesions |&nbsp;<b>df</b>&nbsp;: Dermatofibroma</p1>
+            <p1 style="margin: 0 0 0 0"><b>vasc</b>&nbsp;: Vascular Lesions</p1>`,
+            showCloseButton: true,
+            showConfirmButton: false,
+            didOpen: () => {
+                const img = document.getElementById('videoElement');
+                const fetchImage = () => {
+                    fetch('{{ url_for("video_feed") }}')
+                        .then(response => response.blob())
+                        .then(imageBlob => {
+                            const imageUrl = URL.createObjectURL(imageBlob);
+                            img.src = imageUrl;
+                        })
+                        .catch(function(error) {
+                            console.log("Something went wrong!", error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Cannot access webcam!',
+                            });
+                        });
+                };
+
+            },
+            willClose: () => {
+                const img = document.getElementById('videoElement');
+                if (img.src) {
+                    URL.revokeObjectURL(img.src); // Clean up the object URL to release memory
+                    img.src = ''; // Clear the src
+                }
+            }
+        });
+    });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var resultImagePath = "{{ url_for('static', filename=result_image_path) if result_image_path else '' }}";
+        var resultVideoPath = "{{ url_for('static', filename=result_video_path) if result_video_path else '' }}";
+
+        const classDescriptions = {
+            'NV': 'Melanocytic Nevi',
+            'MEL': 'Melanoma',
+            'BCC': 'Basal Cell Carcinoma',
+            'AKIEC': 'Actinic Keratoses',
+            'BKL': 'Benign Keratosis-like Lesions',
+            'DF': 'Dermatofibroma',
+            'VASC': 'Vascular Lesions'
+        };
+
+        if (resultImagePath) {
+            fetch('/get_prediction_label', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const description = classDescriptions[data.prediction] || 'Unknown';
+                Swal.fire({
+                    title: 'Hasil Prediksi Gambar',
+                    text: `Berikut adalah hasil prediksi gambar yang Anda unggah. Tipe penyakit kanker kulit ini adalah ${data.prediction}.`,
+                    imageUrl: resultImagePath,
+                    imageWidth: 400,
+                    imageHeight: 300,
+                    imageAlt: 'Hasil Prediksi',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        } else if (resultVideoPath) {
+            fetch('/get_prediction_label', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const description = classDescriptions[data.prediction] || 'Unknown';
+                Swal.fire({
+                    title: 'Hasil Prediksi Video',
+                    html: `
+                        <video width="100%" controls>
+                            <source src="${resultVideoPath}" type="video/mp4">
+                            Browser Anda tidak mendukung tag video.
+                        </video>
+                        <h4>Tipe penyakit kanker kulit ini adalah ${data.prediction}</h4>
+                    `,
+                    showCloseButton: true,
+                    showConfirmButton: false
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+    </script>
+  </body>
+</html>
